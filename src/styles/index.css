@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* MeshRelief グローバルスタイル ------------------------------------------- */
+
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-neutral-50 text-neutral-900 antialiased;
+  @apply dark:bg-neutral-950 dark:text-neutral-50;
+}
+
+/* 高ストレス環境でも視認できるよう、フォーカスリングを明確に表示する */
+:focus-visible {
+  @apply outline-none ring-2 ring-primary-500 ring-offset-2;
+  @apply ring-offset-neutral-50 dark:ring-offset-neutral-950;
+}
+
+/*
+ * ボタン押下時の物理的な手応え（タクタイルフィードバック）。
+ * taste-skill 4.5「Tactile Feedback: On :active, use -translate-y-[1px] or
+ * scale-[0.98] to simulate a physical push.」に基づき、個別コンポーネント
+ * ごとに指定するのではなく<button>要素全体にグローバルで適用する
+ * （アプリ内の全ボタンで一貫させ、追加時の実装漏れを防ぐため）。
+ * disabled状態のボタンには適用しない。動きに敏感なユーザー向けに
+ * prefers-reduced-motionでは無効化する。
+ */
+button:not(:disabled) {
+  transition:
+    transform 100ms ease,
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+}
+
+button:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button:not(:disabled) {
+    transition: none;
+  }
+  button:not(:disabled):active {
+    transform: none;
+  }
+}

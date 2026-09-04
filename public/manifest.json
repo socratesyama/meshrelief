@@ -1,0 +1,18 @@
+{
+  "id": "/",
+  "name": "MeshRelief",
+  "short_name": "MeshRelief",
+  "description": "通信インフラに依存しない、QR差分同期型の防災情報共有アプリ。カメラさえあれば動作します。",
+  "lang": "ja",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#1B529A",
+  "background_color": "#F6F7F8",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

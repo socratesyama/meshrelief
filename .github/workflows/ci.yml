@@ -1,0 +1,47 @@
+# MeshRelief — CI
+# =============================================================================
+# ロードマップ「提出前チェックリスト」11番「時間が余ったら: ... CI導入」への対応。
+#
+# 目的: 今回のセッションで直した「ビルドが通っていなかった」（重複import・
+# `as const`によるDict型の齟齬）や、鍵方式の切替（1-1）のような大きな変更の
+# 際に、次回以降のセッションで同じ種類の問題（ビルド破壊・テスト破壊）が
+# 気づかれないままコミットされることを防ぐための、最低限のゲートを設ける。
+#
+# 設計判断メモ:
+#  - lint（ESLint等）は現時点でプロジェクトに導入されていないため含めない
+#    （導入するなら設定ファイルの新規追加から必要になり、今回のスコープを
+#    超えるため見送った。導入する場合はこのワークフローに
+#    `npm run lint` のステップを追加すればよい）。
+#  - `npm run build`（tsc -b && vite build）を実行することで、型チェックと
+#    ビルド成否の両方を1コマンドでまとめて検証している。
+#  - Node.jsのバージョンはpackage.jsonに`engines`指定が無かったため、
+#    開発時に確認した動作バージョン（22系）をCI側で明示的に固定した。
+# =============================================================================
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check + build
+        run: npm run build
+
+      - name: Test
+        run: npm test

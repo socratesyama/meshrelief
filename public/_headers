@@ -1,0 +1,40 @@
+# MeshRelief — Cloudflare Pages 配信ヘッダー設定
+# 各ルールの意図は docs/DECISIONS.md にも記録している。
+
+# Service Worker本体は常に最新を取得させる。ここがキャッシュされると
+# PWAの更新（vite.config.tsのskipWaiting/clientsClaimの効果）が
+# 端末に届かなくなる。
+/sw.js
+  Cache-Control: no-cache
+
+# Workboxが生成する補助スクリプト（ファイル名はビルドごとに変わるが、念のため）
+/workbox-*.js
+  Cache-Control: no-cache
+
+# index.html はビルドのたびに参照先アセット名（コンテンツハッシュ）が
+# 変わるため、キャッシュさせない
+/index.html
+  Cache-Control: no-cache
+
+/
+  Cache-Control: no-cache
+
+# Web App Manifest。頻繁には変わらないが、更新時に反映されるよう短時間のみキャッシュ
+/manifest.json
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# アイコン・favicon類。ファイル名にコンテンツハッシュが付かない静的ファイルのため、
+# immutableにはせず、更新が反映されるまでの猶予として1週間程度に留める
+/favicon.svg
+  Cache-Control: public, max-age=604800
+/icon-192.png
+  Cache-Control: public, max-age=604800
+/icon-512.png
+  Cache-Control: public, max-age=604800
+/icon-source.svg
+  Cache-Control: public, max-age=604800
+
+# Viteがビルド時にファイル名へコンテンツハッシュを埋め込むアセット（dist/assets/配下）。
+# 内容が変われば必ずファイル名も変わるため、長期間・不変（immutable）としてキャッシュしてよい
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

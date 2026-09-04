@@ -1,0 +1,65 @@
+<!--
+  MeshRelief — アイコン原案（SVG）
+  ============================================================================
+  PNG/ICOへの変換は本セッションで実施済み（rsvg-convert使用）。
+  public/icon-192.png・public/icon-512.png・public/favicon.icoとして
+  同梱している。デザインを変更した場合は、以下のコマンド例で再生成すること。
+
+  【再生成コマンド例（Node.jsの sharp / resvg-cli でも、以下のrsvg-convert
+    でもよい）】
+    rsvg-convert -w 192 -h 192 public/icon-source.svg -o public/icon-192.png
+    rsvg-convert -w 512 -h 512 public/icon-source.svg -o public/icon-512.png
+    rsvg-convert -w 16  -h 16  public/favicon.svg -o /tmp/favicon-16.png
+    rsvg-convert -w 32  -h 32  public/favicon.svg -o /tmp/favicon-32.png
+    rsvg-convert -w 48  -h 48  public/favicon.svg -o /tmp/favicon-48.png
+    （その後、上記3つのPNGをPillow等でマルチサイズの1つの.icoにまとめて
+    public/favicon.icoとして保存する）
+  maskable用に別ファイルを用意する必要はない。このSVGは最初から
+  「セーフゾーン」（中央の直径80%の円の内側）にアイコン本体を収めて
+  デザインしてあるため、同じPNG（icon-512.png）を
+  purpose:"any" と purpose:"maskable" の両方でそのまま使い回せる
+  （public/manifest.json は既にこの前提で書いてある）。
+
+  【デザイン意図（v5・taste-skillセッションで再設計）】
+  - 旧デザイン（三角形の頂点3つ+中心1つを線でつないだだけの構成）は、
+    単体で見ると「ネットワーク構成図／組織図」の汎用クリップアートに
+    近く、線が55%不透明度で薄く、ノードの大きさも不揃いだったため、
+    アイコン単体で見た時に「MeshRelief」というブランド・「防災」という
+    文脈を伝えられていなかった（いわゆる量産型のダサさ）。
+  - 再設計では「シェルター（家の形のシルエット）」を主形状にし、その中に
+    「メッシュ（3ノードの三角形ネットワーク）」を刻むことで、
+    "Mesh"+"Relief"の両方の意味を1つの絵で両立させている。
+    - 家のシルエット＝Relief（避難・シェルター）を一目で伝える
+    - 内部の3ノード三角形＝Mesh（P2Pメッシュ同期）を、近づいて見ると
+      伝える
+  - 家のシルエットは塗り（線画ではなく面）にすることで、favicon等の
+    極小サイズでも輪郭がはっきり視認できるようにしている。
+  - 内部の3ノードは、家のシルエットの塗りに対して背景色で「打ち抜く」
+    形で表現している（家の輪郭の角にはかからない位置に配置し、
+    打ち抜きが不自然な欠けに見えないようにしている）。
+  - 配色はデザイントークンから: 背景 primary-600(#1B529A)、
+    前景 primary-50(#EEF4FC)。taste-skill適用によるv4配色刷新
+    （tailwind.config.js参照）で決めたシグナルブルーをそのまま使用。
+  - SetupScreen.tsxの`MeshMark`（ロゴマーク）も同じ「家+メッシュノード」
+    モチーフに統一済み（線画バージョン。詳細はMeshMark本体のコメント参照）。
+  - maskable背景は透過にせず全面塗りつぶしにしている（透過のままだと
+    OSが正方形以外の形（丸、角丸四角等）でマスクした際に背景が
+    透けて不自然になるため）。中心から半径205px程度の円の内側
+    （セーフゾーン）に家のシルエット全体が収まるようデザインしている。
+  ============================================================================
+-->
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景（全面塗りつぶし。OSのマスク形状に関わらず不自然にならないように） -->
+  <rect width="512" height="512" fill="#1B529A" />
+
+  <!-- シェルター（家の形）のシルエット。セーフゾーン＝中心から半径205px程度の円の内側に収めている -->
+  <path d="M256 110 L366 214 L366 380 L146 380 L146 214 Z" fill="#EEF4FC" />
+
+  <!-- 内部のメッシュノード（3ノードの三角形ネットワーク）。背景色で打ち抜いて表現 -->
+  <g stroke="#1B529A" stroke-width="9" stroke-linecap="round">
+    <path d="M256 245 L206 322 M256 245 L306 322 M206 322 L306 322" />
+  </g>
+  <circle cx="256" cy="245" r="15" fill="#1B529A" />
+  <circle cx="206" cy="322" r="15" fill="#1B529A" />
+  <circle cx="306" cy="322" r="15" fill="#1B529A" />
+</svg>
