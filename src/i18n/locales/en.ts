@@ -265,6 +265,9 @@ export const en = {
     sendingText: 'Show this screen to the other device',
     backToWaiting: 'Back to waiting',
     footerNote: 'This device is running as a sync station.',
+    exitButton: 'Turn off sync station mode',
+    exitSubmitting: 'Turning off\u2026',
+    exitConfirm: 'Turn off "sync station" mode on this device and switch back to personal mode? This change will remain after refresh.',
   },
 
   peerSync: {

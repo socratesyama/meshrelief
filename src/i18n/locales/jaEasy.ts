@@ -265,6 +265,9 @@ export const jaEasy = {
     sendingText: 'がめんを あいてに みせてください',
     backToWaiting: 'まつ がめんに もどる',
     footerNote: 'この スマホは「うけつけ」として うごいて います。',
+    exitButton: 'うけつけを やめる',
+    exitSubmitting: 'やめて います…',
+    exitConfirm: 'この スマホの「うけつけ」せっていを やめて、ふつうの モードに もどしますか？ この へんこうは さいよみこみ しても のこります。',
   },
 
   peerSync: {

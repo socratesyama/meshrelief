@@ -61,10 +61,12 @@ export default function StationScreen() {
   const nodeRole = useMeshStore((state) => state.nodeRole)
   const nodeName = useMeshStore((state) => state.nodeName)
   const syncStatus = useMeshStore((state) => state.syncStatus)
+  const setNodeRole = useMeshStore((state) => state.setNodeRole)
   const locale = useMeshStore((state) => state.locale)
   const t = useMeshStore((state) => state.t)
 
   const [syncCount, setSyncCount] = useState(0)
+  const [isExitingStation, setIsExitingStation] = useState(false)
 
   const { mode, frames, receiveProgress, guidance, toast, myVcQR, handleFrame, cancelSending } = usePeerSync({
     scope: 'all',
@@ -80,6 +82,17 @@ export default function StationScreen() {
     })
     return () => engine.stopStationLoop()
   }, [engine])
+
+  const handleExitStation = async () => {
+    if (isExitingStation) return
+    if (!window.confirm(t.stationScreen.exitConfirm)) return
+    setIsExitingStation(true)
+    try {
+      await setNodeRole('personal')
+    } finally {
+      setIsExitingStation(false)
+    }
+  }
 
   if (nodeRole !== 'station') {
     return null
@@ -152,7 +165,17 @@ export default function StationScreen() {
         ) : null}
       </div>
 
-      <footer className="px-5 pb-4 text-center text-xs text-neutral-500">{t.stationScreen.footerNote}</footer>
+      <footer className="flex flex-col items-center gap-2 px-5 pb-4 text-center text-xs text-neutral-500">
+        <p>{t.stationScreen.footerNote}</p>
+        <button
+          type="button"
+          onClick={() => void handleExitStation()}
+          disabled={isExitingStation}
+          className="min-h-tap rounded-card border border-neutral-700 px-3 text-xs text-neutral-300 hover:bg-neutral-900 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {isExitingStation ? t.stationScreen.exitSubmitting : t.stationScreen.exitButton}
+        </button>
+      </footer>
     </div>
   )
 }

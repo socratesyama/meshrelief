@@ -250,6 +250,9 @@ export const zh = {
     sendingText: '请将屏幕出示给对方',
     backToWaiting: '返回待机',
     footerNote: '此设备正作为同步站点运行。',
+    exitButton: '关闭同步站点模式',
+    exitSubmitting: '正在关闭…',
+    exitConfirm: '要关闭此设备的“同步站点”模式并切回个人模式吗？此更改在刷新后仍会保留。',
   },
 
   peerSync: {

@@ -281,6 +281,9 @@ export const ja = {
     sendingText: '画面を相手に見せてください',
     backToWaiting: '待機に戻る',
     footerNote: 'この端末は同期ステーションとして動作しています。',
+    exitButton: '同期ステーションを解除',
+    exitSubmitting: '解除中…',
+    exitConfirm: 'この端末の「同期ステーション」設定を解除して個人モードに戻しますか？ この変更は再読み込み後も維持されます。',
   },
 
   peerSync: {

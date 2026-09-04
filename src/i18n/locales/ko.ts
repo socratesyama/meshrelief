@@ -251,6 +251,9 @@ export const ko = {
     sendingText: '화면을 상대방에게 보여주세요',
     backToWaiting: '대기 화면으로',
     footerNote: '이 기기는 동기화 스테이션으로 동작하고 있습니다.',
+    exitButton: '스테이션 모드 해제',
+    exitSubmitting: '해제 중…',
+    exitConfirm: '이 기기의 "동기화 스테이션" 설정을 해제하고 개인 모드로 전환할까요? 이 변경은 새로고침 후에도 유지됩니다.',
   },
 
   peerSync: {
