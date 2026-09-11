@@ -117,7 +117,6 @@ export default function QRScanner({ onFrame, active = true, className }: QRScann
       if (rafId !== null) cancelAnimationFrame(rafId)
       stream?.getTracks().forEach((track) => track.stop())
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- onFrame/activeはrefで参照するため依存配列に含めない
   }, [])
 
   return (

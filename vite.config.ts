@@ -23,7 +23,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 //    いたため、生成物ではなく実体のあるファイルとして用意した）。
 //  - workbox.globPatterns に json を追加（manifest.jsonもプリキャッシュ
 //    対象に含める）。
-//  - skipWaiting/clientsClaim を明示。registerType:'autoUpdate' と
+//  - prompt更新戦略を明示。registerType:'prompt' と
 //    組み合わせ、新しいService Workerが即座に有効化されるようにする
 //    （完全オフライン運用中に「更新はあるが古い版のまま動き続ける」
 //    状態を避けるため）。
@@ -35,7 +35,7 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
       // 独自のpublic/manifest.jsonを使うため、プラグインによる自動生成は無効化する
       manifest: false,
       // publicディレクトリ内の「JSから直接importされないが必要なファイル」を明示する。
@@ -55,10 +55,10 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,svg,png,woff2,json}'],
         cleanupOutdatedCaches: true,
         navigateFallback: '/index.html',
-        // 新しいService Workerを待機させず即座に有効化する（registerType:'autoUpdate'と対）。
-        // オフライン運用中でも、次回オンライン復帰時や再訪問時に確実に最新版へ切り替わるようにする
-        skipWaiting: true,
-        clientsClaim: true,
+        // 新しいService Workerは待機させ、業務完了後に更新する（registerType:'prompt'と対）。
+        // オフライン運用中でも、次回オンライン復帰時や再訪問時に業務中の強制切替を避けるようにする
+        skipWaiting: false,
+        clientsClaim: false,
       },
     }),
   ],

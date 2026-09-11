@@ -73,7 +73,6 @@ export function usePeerSync(options: UsePeerSyncOptions = {}): UsePeerSyncResult
   const { scope = 'default', onReceiveComplete } = options
 
   const engine = useMeshStore((state) => state.engine)
-  const entries = useMeshStore((state) => state.entries)
   const t = useMeshStore((state) => state.t)
 
   const [mode, setMode] = useState<PeerSyncMode>('idle')
@@ -94,7 +93,7 @@ export function usePeerSync(options: UsePeerSyncOptions = {}): UsePeerSyncResult
   const sendTimerRef = useRef<number | null>(null)
   const toastTimerRef = useRef<number | null>(null)
 
-  const myVcQR = useMemo(() => engine?.generateVectorClockQR() ?? '', [engine, entries])
+  const myVcQR = useMemo(() => engine?.generateVectorClockQR() ?? '', [engine])
 
   function showToast(message: string): void {
     setToast(message)
@@ -132,7 +131,7 @@ export function usePeerSync(options: UsePeerSyncOptions = {}): UsePeerSyncResult
       }
     }, 1000)
     return () => window.clearInterval(interval)
-  }, [mode])
+  }, [mode, t.peerSync.badScan])
 
   useEffect(() => {
     return () => {

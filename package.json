@@ -10,7 +10,10 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "typecheck": "tsc -b --pretty false",
+    "lint": "eslint .",
+    "dependency-audit": "npm audit --omit=dev"
   },
   "dependencies": {
     "idb": "^8.0.0",
@@ -32,9 +35,13 @@
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
+    "@typescript-eslint/eslint-plugin": "^8.70.0",
+    "@typescript-eslint/parser": "^8.70.0",
     "@vitejs/plugin-react": "^4.3.4",
     "@vitest/ui": "^2.1.8",
     "autoprefixer": "^10.4.20",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "fake-indexeddb": "^6.0.0",
     "jsdom": "^25.0.1",
     "postcss": "^8.4.49",

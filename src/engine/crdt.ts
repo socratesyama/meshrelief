@@ -122,7 +122,7 @@ type SignablePayload = Omit<CRDTEntry, 'signature' | 'verified'>
 
 /** エントリのうち署名対象部分だけを取り出す。 */
 function toSignablePayload(entry: CRDTEntry): SignablePayload {
-  const { signature, verified, ...rest } = entry
+  const { signature: _signature, verified: _verified, ...rest } = entry
   return rest
 }
 

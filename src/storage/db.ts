@@ -4,7 +4,7 @@
  * 実装計画書 v2 §8「永続化仕様」に対応。
  *
  *  §8.1 IndexedDBスキーマ:
- *    DB名 `meshrelief`（version 2固定）
+ *    DB名 `meshrelief:public:v2`（profile/schema namespace）
  *    - entries (keyPath: 'id')   index: nodeId / type(data.type) / updatedAt / shelterId(data.shelterId)
  *    - meta    (keyPath: 'key')  nodeId / nodeName / vectorClock / lamportClock / 鍵ペア（1-1参照）
  *  §8.2 CryptoKey永続化:
@@ -79,7 +79,8 @@ import type { DBSchema, IDBPDatabase } from 'idb'
 import { CRDTEngine } from '../engine/crdt'
 import type { CRDTEntry, NodeId, NodeRole, PersistedMeta, RecordId, RecordType, VectorClock } from '../types'
 
-const DB_NAME = 'meshrelief'
+const STORAGE_SCHEMA_VERSION = 2
+const DB_NAME = `meshrelief:public:v${STORAGE_SCHEMA_VERSION}`
 const DB_VERSION = 2
 const META_KEY = 'identity'
 
