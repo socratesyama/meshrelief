@@ -58,3 +58,14 @@ button:not(:disabled):active {
     transform: none;
   }
 }
+
+/* 操作性の共通基盤: 災害時のタッチ操作と長時間利用を優先 */
+html { scroll-behavior: smooth; }
+body { min-width: 320px; overscroll-behavior-x: none; }
+button, input, select, textarea { font: inherit; }
+button, select, input[type='checkbox'], input[type='radio'] { touch-action: manipulation; }
+input, select, textarea { min-height: 44px; }
+::selection { background: theme('colors.primary.200'); color: theme('colors.neutral.950'); }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
